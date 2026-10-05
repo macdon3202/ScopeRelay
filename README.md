@@ -48,6 +48,9 @@ python -X utf8 -m genvm_linter.cli check contracts/scope_relay.py
 
 Current result: **25 tests passing**, lint and validation passing.
 
-Deploy [`contracts/scope_relay.py`](contracts/scope_relay.py) with no
-constructor arguments. Live evidence remains pending until a real StudioNet
-address is supplied; local fixtures are not represented as network evidence.
+Deployed on StudioNet at
+[`0x5Edc6C71F4820A471F18581e0E2013e8D03D632E`](https://explorer-studio.genlayer.com/address/0x5Edc6C71F4820A471F18581e0E2013e8D03D632E).
+The finalized five-transaction happy path and exact post-write readbacks are in
+[`docs/STUDIONET_E2E.md`](docs/STUDIONET_E2E.md) and
+[`docs/studionet-e2e.json`](docs/studionet-e2e.json). Local fixtures remain
+clearly separated from network evidence.
