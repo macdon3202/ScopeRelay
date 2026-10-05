@@ -53,4 +53,6 @@ Deployed on StudioNet at
 The finalized five-transaction happy path and exact post-write readbacks are in
 [`docs/STUDIONET_E2E.md`](docs/STUDIONET_E2E.md) and
 [`docs/studionet-e2e.json`](docs/studionet-e2e.json). Local fixtures remain
-clearly separated from network evidence.
+clearly separated from network evidence. Live adversarial transactions,
+failure codes and before/after rollback snapshots are recorded in
+[`docs/studionet-negative-e2e.json`](docs/studionet-negative-e2e.json).

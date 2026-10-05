@@ -26,3 +26,24 @@ execution was independently proven.
 
 The complete machine-readable transaction results and post-write snapshots are
 stored in [`studionet-e2e.json`](studionet-e2e.json).
+
+## Live failure and rollback path
+
+Handoff `2` deliberately submitted a plan that transfers registrar ownership
+and changes billing, contradicting the sealed constraints. Consensus returned
+`OUT_OF_SCOPE`, with `objective_alignment=NO`, `constraint_preserved=NO` and
+`extra_authority_requested=YES`.
+
+| Adversarial action | Transaction | Expected error | Snapshot rollback |
+|---|---|---|---|
+| Principal attempts delegate acceptance | [`0xaac282...f6387`](https://explorer-studio.genlayer.com/tx/0xaac2823191b080362ad2ce8b320a6cd3dde087bfb26cd4565db28fb0778f6387) | `DELEGATE_REQUIRED` | verified identical |
+| Delegate accepts wrong digest | [`0xbf4082...f262e`](https://explorer-studio.genlayer.com/tx/0xbf4082ae268653ed07331b8b89013eb2baabf39f1015ed388425be88738f262e) | `MANDATE_DIGEST_MISMATCH` | verified identical |
+| Principal attempts delegate plan submission | [`0x9c95cf...71236`](https://explorer-studio.genlayer.com/tx/0x9c95cf3379b2f7f549fbfd9bef0ca8b300aebdc7f2d95b2fb8ed9028d1171236) | `DELEGATE_REQUIRED` | verified identical |
+| Delegate claims completion before assessment | [`0xb933d6...050bb`](https://explorer-studio.genlayer.com/tx/0xb933d661d22b67f0a1a62714163392f2e73883ca9cedb234426ff6d0457050bb) | `HANDOFF_NOT_ALIGNED` | verified identical |
+| Delegate claims completion after rejection | [`0x245c0b...b1e53`](https://explorer-studio.genlayer.com/tx/0x245c0b946f2417a8d0b6dad4e51d374c7fd650073e3a4a5958e6c392e05b1e53) | `HANDOFF_NOT_ALIGNED` | verified identical |
+
+All rejected calls were `FINALIZED / MAJORITY_AGREE / ERROR`. The adversarial
+assessment transaction [`0x1518d7...46737`](https://explorer-studio.genlayer.com/tx/0x1518d786726248fdce6bf7e7f2572400ab65318edb292b765a4ff47e86c46737)
+was `FINALIZED / MAJORITY_AGREE / SUCCESS` and persisted the terminal
+`OUT_OF_SCOPE` state. Full inputs, outputs and snapshots are stored in
+[`studionet-negative-e2e.json`](studionet-negative-e2e.json).
